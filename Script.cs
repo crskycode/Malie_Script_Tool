@@ -206,7 +206,7 @@ namespace Malie_Script_Tool
                             else if (offset < _seg_code.Length)
                                 Console.WriteLine($"{addr:X8}| JUMP {offset:X8}h");
                             else
-                                Console.WriteLine($"{addr:X8}| JUMP {offset:X8} ; WTF");
+                                Console.WriteLine($"{addr:X8}| JUMP {offset:X8}h ; WTF");
 
                             break;
                         }
@@ -262,7 +262,7 @@ namespace Malie_Script_Tool
                             uint argc = reader.ReadByte();
 
                             if (index >= 0 && index < _functions.Count)
-                                Console.WriteLine($"{addr:X8}| CALL_C {_functions[index].Name} ({argc})");
+                                Console.WriteLine($"{addr:X8}| CALL_CB {_functions[index].Name} ({argc})");
                             else
                                 throw new Exception();
 
