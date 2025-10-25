@@ -1098,6 +1098,9 @@ namespace Malie_Script_Tool
             input = VoiceMessageEscapeRegex().Replace(input, "{$1}");
             // Ruby
             input = RubyMessageEscapeRegex().Replace(input, "[$1]($2)");
+            // Align
+            input = AlignMessageEscapeRegex().Replace(input, m =>
+                    $"[align={EscapeHex(m.Groups[1].Value)}]");
             // Font
             input = FontMessageEscapeRegex().Replace(input, m =>
                     $"[font={EscapeHex(m.Groups[1].Value)}]");
@@ -1126,6 +1129,9 @@ namespace Malie_Script_Tool
             input = VoiceMessageUnescapeRegex().Replace(input, "\u0007\u0008$1\u0000");
             // Ruby
             input = RubyMessageUnescapeRegex().Replace(input, "\u0007\u0001$1\u000A$2\u0000");
+            // Align
+            input = AlignMessageUnescapeRegex().Replace(input, m =>
+                    $"\u0007\u0002{UnescapeHex(m.Groups[1].Value)}");
             // Font
             input = FontMessageUnescapeRegex().Replace(input, m =>
                     $"\u0007\u000D{UnescapeHex(m.Groups[1].Value)}");
@@ -1209,6 +1215,9 @@ namespace Malie_Script_Tool
         [GeneratedRegex(@"\[color=([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})\]")]
         private static partial Regex ColorMessageUnescapeRegex();
 
+        [GeneratedRegex(@"\[align=([0-9A-Fa-f]{2})\]")]
+        private static partial Regex AlignMessageUnescapeRegex();
+
         [GeneratedRegex(@"\u0007\u0008([^\u0007\u0008]+?)\u0000")]
         private static partial Regex VoiceMessageEscapeRegex();
 
@@ -1220,5 +1229,8 @@ namespace Malie_Script_Tool
 
         [GeneratedRegex(@"\u0001(.)(.)(.)")]
         private static partial Regex ColorMessageEscapeRegex();
+
+        [GeneratedRegex(@"\u0007\u0002(.)")]
+        private static partial Regex AlignMessageEscapeRegex();
     }
 }
